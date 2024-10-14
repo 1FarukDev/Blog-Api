@@ -1,0 +1,1 @@
+## You can generate JWT_SECRET with allkeygenerator
