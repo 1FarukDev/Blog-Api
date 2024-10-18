@@ -18,6 +18,21 @@ const getAllBlogPosts = async (req: Request, res: Response, next: NextFunction):
         next(error);
     }
 };
+const getAllBlogPostsByUser = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { authorId } = req.params
+        const blog = await Blog.find({ authorId: authorId })
+        if (!blog) {
+            const error = new Error('Blog post not found') as any;
+            error.statusCode = StatusCodes.NOT_FOUND;
+            throw error;
+        }
+        res.status(StatusCodes.OK).json({ blog });
+    } catch (error) {
+        next(error)
+    }
+};
+
 
 const getSingleBlogPost = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -113,5 +128,6 @@ export {
     getSingleBlogPost,
     createBlogPost,
     updateBlogPost,
-    deleteBlogPost
+    deleteBlogPost,
+    getAllBlogPostsByUser
 };

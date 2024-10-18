@@ -5,7 +5,8 @@ import {
     getSingleBlogPost,
     createBlogPost,
     updateBlogPost,
-    deleteBlogPost
+    deleteBlogPost,
+    getAllBlogPostsByUser
 } from '../controllers/blog';
 
 const router: Router = Router();
@@ -14,8 +15,11 @@ router.route('/').get(getAllBlogPosts);
 
 router.route('/').post(authenticateMiddleware, createBlogPost);
 router.route('/:id')
-    .get(getSingleBlogPost) 
+    .get(getSingleBlogPost)
     .patch(authenticateMiddleware, updateBlogPost)
     .delete(authenticateMiddleware, deleteBlogPost);
+
+router.route('/user/:authorId')
+    .get(getAllBlogPostsByUser);
 
 export default router;
